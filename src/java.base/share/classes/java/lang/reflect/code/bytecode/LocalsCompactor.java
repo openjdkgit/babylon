@@ -148,6 +148,9 @@ public final class LocalsCompactor {
                     // @@@ ExceptionTableCompactor can be chained on ClassTransform level when the recent Class-File API is merged into code-reflection
                     mb.transformCode(com, new ExceptionTableCompactor().andThen((cob, coe) -> {
                         switch (coe) {
+                            // @@@ Can be moved into a separate transform when recent master fixes are merged to code-reflection
+                            case ExceptionCatch ec when ec.tryStart() == ec.tryEnd() -> {} // Filter empty try blocks
+
                             case LoadInstruction li ->
                                 cob.loadLocal(li.typeKind(), slotMap[li.slot()]);
                             case StoreInstruction si ->
