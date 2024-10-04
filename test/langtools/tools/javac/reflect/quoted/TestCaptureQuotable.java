@@ -66,7 +66,7 @@ public class TestCaptureQuotable {
         assertEquals(quoted.capturedValues().size(), 2);
         Iterator<Object> it = quoted.capturedValues().values().iterator();
         assertEquals(((Var)it.next()).value(), hello);
-        assertEquals(((Var)it.next()).value(), x);
+        assertEquals(it.next(), x);
         int res = (int)Interpreter.invoke(MethodHandles.lookup(), (Op & Op.Invokable) quoted.op(),
                 quoted.capturedValues(), 1);
         assertEquals(res, x + 1 + hello.length());
